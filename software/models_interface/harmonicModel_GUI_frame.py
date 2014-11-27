@@ -130,12 +130,15 @@ class HarmonicModel_frame:
 		#BUTTON TO COMPUTE EVERYTHING
 		self.compute = Button(self.parent, text="Compute", command=self.compute_model, bg="dark red", fg="white")
 		self.compute.grid(row=12, column=0, padx=5, pady=(10,2), sticky=W)
+		#BUTTON TO PLOT
+		self.plot = Button(self.parent, text="Plot", command=self.plot_model, bg="gray30", fg="white")
+		self.plot.grid(row=13, column=0, padx=5, pady=(5,2), sticky=W)
 
 		#BUTTON TO PLAY OUTPUT
 		output_label = "Output:"
-		Label(self.parent, text=output_label).grid(row=13, column=0, sticky=W, padx=5, pady=(10,15))
+		Label(self.parent, text=output_label).grid(row=14, column=0, sticky=W, padx=5, pady=(10,15))
 		self.output = Button(self.parent, text=">", command=self.play_out_sound, bg="gray30", fg="white")
-		self.output.grid(row=13, column=0, padx=(60,5), pady=(10,15), sticky=W)
+		self.output.grid(row=14, column=0, padx=(60,5), pady=(10,15), sticky=W)
 
 		# define options for opening file
 		self.file_opt = options = {}
@@ -185,10 +188,13 @@ class HarmonicModel_frame:
 			f0et = int(self.f0et.get())
 			harmDevSlope = float(self.harmDevSlope.get())
 			
-			harmonicModel_function.main(inputFile, window, M, N, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
+			self.x, self.fs, self.hfreq, self.y = harmonicModel_function.main(inputFile, window, M, N, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope)
 
 		except ValueError as errorMessage:
 			tkMessageBox.showerror("Input values error", errorMessage)
+	
+	def plot_model(self):
+		harmonicModel_function.plot(self.x, self.fs, self.hfreq, self.y)
 
 	def play_out_sound(self):
 
