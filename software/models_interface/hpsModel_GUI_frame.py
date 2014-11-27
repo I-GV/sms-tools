@@ -140,23 +140,27 @@ class HpsModel_frame:
 		self.compute = Button(self.parent, text="Compute", command=self.compute_model, bg="dark red", fg="white")
 		self.compute.grid(row=14, column=0, padx=5, pady=(10,2), sticky=W)
 
+		#BUTTON TO PLOT
+		self.plot = Button(self.parent, text="Plot", command=self.plot_model, bg="gray30", fg="white")
+		self.plot.grid(row=15, column=0, padx=5, pady=(5,2), sticky=W)
+
 		#BUTTON TO PLAY SINE OUTPUT
 		output_label = "Sinusoidal:"
-		Label(self.parent, text=output_label).grid(row=15, column=0, sticky=W, padx=5, pady=(10,0))
+		Label(self.parent, text=output_label).grid(row=16, column=0, sticky=W, padx=5, pady=(10,0))
 		self.output = Button(self.parent, text=">", command=lambda:self.play_out_sound('hpsModel_sines'), bg="gray30", fg="white")
-		self.output.grid(row=15, column=0, padx=(80,5), pady=(10,0), sticky=W)
+		self.output.grid(row=16, column=0, padx=(80,5), pady=(10,0), sticky=W)
 
 		#BUTTON TO PLAY STOCHASTIC OUTPUT
 		output_label = "Stochastic:"
-		Label(self.parent, text=output_label).grid(row=16, column=0, sticky=W, padx=5, pady=(5,0))
+		Label(self.parent, text=output_label).grid(row=17, column=0, sticky=W, padx=5, pady=(5,0))
 		self.output = Button(self.parent, text=">", command=lambda:self.play_out_sound('hpsModel_stochastic'), bg="gray30", fg="white")
-		self.output.grid(row=16, column=0, padx=(80,5), pady=(5,0), sticky=W)
+		self.output.grid(row=17, column=0, padx=(80,5), pady=(5,0), sticky=W)
 
 		#BUTTON TO PLAY OUTPUT
 		output_label = "Output:"
-		Label(self.parent, text=output_label).grid(row=17, column=0, sticky=W, padx=5, pady=(5,15))
+		Label(self.parent, text=output_label).grid(row=18, column=0, sticky=W, padx=5, pady=(5,15))
 		self.output = Button(self.parent, text=">", command=lambda:self.play_out_sound('hpsModel'), bg="gray30", fg="white")
-		self.output.grid(row=17, column=0, padx=(80,5), pady=(5,15), sticky=W)
+		self.output.grid(row=18, column=0, padx=(80,5), pady=(5,15), sticky=W)
 
 
 		# define options for opening file
@@ -208,10 +212,13 @@ class HpsModel_frame:
 			harmDevSlope = float(self.harmDevSlope.get())
 			stocf = float(self.stocf.get())
 
-			hpsModel_function.main(inputFile, window, M, N, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope, stocf)
+			self.x, self.fs, self.hfreq, self.stocEnv, self.y = hpsModel_function.main(inputFile, window, M, N, t, minSineDur, nH, minf0, maxf0, f0et, harmDevSlope, stocf)
 
 		except ValueError as errorMessage:
 			tkMessageBox.showerror("Input values error", errorMessage)
+
+	def plot_model(self):
+	    hpsModel_function.plot(self.x,self.fs,self.stocEnv,self.hfreq,self.y)
 
 	def play_out_sound(self, extension):
 
