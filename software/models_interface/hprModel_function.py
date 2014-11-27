@@ -52,7 +52,12 @@ def main(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601
 	UF.wavwrite(yh, fs, outputFileSines)
 	UF.wavwrite(xr, fs, outputFileResidual)
 	UF.wavwrite(y, fs, outputFile)
+	return x, fs, mXr,hfreq, y
 
+def plot(x,fs,N,mXr,hfreq,y):
+	# hop size (has to be 1/4 of Ns)
+	H = 128
+	
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
 
@@ -101,3 +106,5 @@ def main(inputFile='../../sounds/sax-phrase-short.wav', window='blackman', M=601
 
 if __name__ == "__main__":
 	main()
+elif __name__ == "__plot__":
+	plot(x,fs,N,mXr,hfreq,y)
