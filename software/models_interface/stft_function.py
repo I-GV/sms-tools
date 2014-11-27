@@ -35,7 +35,9 @@ def main(inputFile = '../../sounds/piano.wav', window = 'hamming', M = 1024, N =
 
 	# write the sound resulting from the inverse stft
 	UF.wavwrite(y, fs, outputFile)
+	return x, fs, mX, pX, y
 
+def plot(x, fs, mX, H, N, pX, y):
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
 
@@ -86,3 +88,5 @@ def main(inputFile = '../../sounds/piano.wav', window = 'hamming', M = 1024, N =
 
 if __name__ == "__main__":
 	main()
+elif __name__ == "__plot__":
+	plot(x, fs, mX, H, N, pX, y)
