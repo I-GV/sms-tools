@@ -120,11 +120,15 @@ class SpsModel_frame:
 		self.compute = Button(self.parent, text="Compute", command=self.compute_model, bg="dark red", fg="white")
 		self.compute.grid(row=11, column=0, padx=5, pady=(10,2), sticky=W)
 
+		#BUTTON TO PLOT
+		self.plot = Button(self.parent, text="Plot", command=self.plot_model, bg="gray30", fg="white")
+		self.plot.grid(row=12, column=0, padx=5, pady=(5,2), sticky=W)
+
 		#BUTTON TO PLAY SINE OUTPUT
 		output_label = "Sinusoidal:"
-		Label(self.parent, text=output_label).grid(row=12, column=0, sticky=W, padx=5, pady=(10,0))
+		Label(self.parent, text=output_label).grid(row=13, column=0, sticky=W, padx=5, pady=(10,0))
 		self.output = Button(self.parent, text=">", command=lambda:self.play_out_sound('spsModel_sines'), bg="gray30", fg="white")
-		self.output.grid(row=12, column=0, padx=(80,5), pady=(10,0), sticky=W)
+		self.output.grid(row=13, column=0, padx=(80,5), pady=(10,0), sticky=W)
 
 		#BUTTON TO PLAY STOCHASTIC OUTPUT
 		output_label = "Stochastic:"
@@ -185,11 +189,13 @@ class SpsModel_frame:
 			freqDevSlope = float(self.freqDevSlope.get())
 			stocf = float(self.stocf.get())
 			
-			spsModel_function.main(inputFile, window, M, N, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf)
+			self.x, self.fs, self.stocEnv, self.tfreq, self.y = spsModel_function.main(inputFile, window, M, N, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope, stocf)
 
 		except ValueError as errorMessage:
 			tkMessageBox.showerror("Input values error", errorMessage)
-
+	def plot_model(self):
+		spsModel_function.plot(self.x, self.fs, self.stocEnv, self.tfreq, self.y)
+	
 	def play_out_sound(self, extension):
 
 		filename = 'output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_' + extension + '.wav'
