@@ -48,6 +48,11 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 	UF.wavwrite(ys, fs, outputFileSines)
 	UF.wavwrite(yst, fs, outputFileStochastic)
 	UF.wavwrite(y, fs, outputFile)
+	return x, fs, stocEnv, tfreq, y
+
+def plot(x, fs, stocEnv, tfreq, y):
+	# hop size (has to be 1/4 of Ns)
+	H = 128
 
 	# create figure to plot
 	plt.figure(figsize=(12, 9)) 
@@ -96,3 +101,5 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 
 if __name__ == "__main__":
 	main()
+elif __name__ == "__plot__":
+	plot(x, fs, stocEnv, tfreq, y)
