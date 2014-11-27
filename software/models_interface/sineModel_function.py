@@ -89,5 +89,5 @@ def plot(x,fs,tfreq,y):
 if __name__ == "__main__":
 	main()
 elif __name__ == "__plot__":
-    plot(x,fs,tfreq,y)
+	plot(x,fs,tfreq,y)
 
