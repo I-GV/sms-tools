@@ -44,6 +44,11 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 
 	# write the synthesized sound obtained from the sinusoidal synthesis
 	UF.wavwrite(y, fs, outputFile)
+	return x,fs,tfreq,y
+
+def plot(x,fs,tfreq,y):
+	# hop size (has to be 1/4 of Ns)
+	H = 128
 
 	# create figure to show plots
 	plt.figure(figsize=(12, 9))
@@ -83,4 +88,6 @@ def main(inputFile='../../sounds/bendir.wav', window='hamming', M=2001, N=2048, 
 
 if __name__ == "__main__":
 	main()
+elif __name__ == "__plot__":
+    plot(x,fs,tfreq,y)
 
