@@ -218,7 +218,7 @@ class HpsModel_frame:
 			tkMessageBox.showerror("Input values error", errorMessage)
 
 	def plot_model(self):
-	    hpsModel_function.plot(self.x,self.fs,self.stocEnv,self.hfreq,self.y)
+		hpsModel_function.plot(self.x,self.fs,self.stocEnv,self.hfreq,self.y)
 
 	def play_out_sound(self, extension):
 
