@@ -27,8 +27,10 @@ def main(inputFile='../../sounds/ocean.wav', H=256, N=512, stocf=.1):
 	outputFile = 'output_sounds/' + os.path.basename(inputFile)[:-4] + '_stochasticModel.wav'
 
 	# write output sound
-	UF.wavwrite(y, fs, outputFile)               
+	UF.wavwrite(y, fs, outputFile)      
+	return x, fs, stocEnv, y
 
+def plot(x, fs, stocEnv, H, N, stocf, y):
 	# create figure to plot
 	plt.figure(figsize=(12, 9))
 
@@ -63,3 +65,5 @@ def main(inputFile='../../sounds/ocean.wav', H=256, N=512, stocf=.1):
   
 if __name__ == "__main__":
 	main()
+elif __name__ == "__plot__":
+	plot(x, fs, stocEnv, H, N, stocf, y)
