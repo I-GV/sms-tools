@@ -75,11 +75,15 @@ class Stft_frame:
 		self.compute = Button(self.parent, text="Compute", command=self.compute_model, bg="dark red", fg="white")
 		self.compute.grid(row=6, column=0, padx=5, pady=(10,2), sticky=W)
 
+		#BUTTON TO PLOT
+		self.plot = Button(self.parent, text="Plot", command=self.plot_model, bg="gray30", fg="white")
+		self.plot.grid(row=7, column=0, padx=5, pady=(5,2), sticky=W)
+
 		#BUTTON TO PLAY OUTPUT
 		output_label = "Output:"
-		Label(self.parent, text=output_label).grid(row=7, column=0, sticky=W, padx=5, pady=(10,15))
+		Label(self.parent, text=output_label).grid(row=8, column=0, sticky=W, padx=5, pady=(10,15))
 		self.output = Button(self.parent, text=">", command=self.play_out_sound, bg="gray30", fg="white")
-		self.output.grid(row=7, column=0, padx=(60,5), pady=(10,15), sticky=W)
+		self.output.grid(row=8, column=0, padx=(60,5), pady=(10,15), sticky=W)
 
 
 		# define options for opening file
@@ -124,11 +128,15 @@ class Stft_frame:
 			N = int(self.N.get())
 			H = int(self.H.get())
 		
-			stft_function.main(inputFile, window, M, N, H)
+			self.x, self.fs, self.mX, self.pX, self.y = stft_function.main(inputFile, window, M, N, H)
 
 		except ValueError as errorMessage:
 			tkMessageBox.showerror("Input values error", errorMessage)
-
+	def plot_model(self):
+		N = int(self.N.get())
+		H = int(self.H.get())
+		stft_function.plot(self.x, self.fs, self.mX, H, N, self.pX, self.y)
+		
 	def play_out_sound(self):
 
 		filename = 'output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_stft.wav'
