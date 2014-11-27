@@ -113,23 +113,27 @@ class SprModel_frame:
 		self.compute = Button(self.parent, text="Compute", command=self.compute_model, bg="dark red", fg="white")
 		self.compute.grid(row=10, column=0, padx=5, pady=(10,2), sticky=W)
 
+		#BUTTON TO PLOT
+		self.plot = Button(self.parent, text="Plot", command=self.plot_model, bg="gray30", fg="white")
+		self.plot.grid(row=11, column=0, padx=5, pady=(5,2), sticky=W)
+
 		#BUTTON TO PLAY SINE OUTPUT
 		output_label = "Sinusoidal:"
-		Label(self.parent, text=output_label).grid(row=11, column=0, sticky=W, padx=5, pady=(10,0))
+		Label(self.parent, text=output_label).grid(row=12, column=0, sticky=W, padx=5, pady=(10,0))
 		self.output = Button(self.parent, text=">", command=lambda:self.play_out_sound('sprModel_sines'), bg="gray30", fg="white")
-		self.output.grid(row=11, column=0, padx=(80,5), pady=(10,0), sticky=W)
+		self.output.grid(row=12, column=0, padx=(80,5), pady=(10,0), sticky=W)
 
 		#BUTTON TO PLAY RESIDUAL OUTPUT
 		output_label = "Residual:"
-		Label(self.parent, text=output_label).grid(row=12, column=0, sticky=W, padx=5, pady=(5,0))
+		Label(self.parent, text=output_label).grid(row=13, column=0, sticky=W, padx=5, pady=(5,0))
 		self.output = Button(self.parent, text=">", command=lambda:self.play_out_sound('sprModel_residual'), bg="gray30", fg="white")
-		self.output.grid(row=12, column=0, padx=(80,5), pady=(5,0), sticky=W)
+		self.output.grid(row=13, column=0, padx=(80,5), pady=(5,0), sticky=W)
 
 		#BUTTON TO PLAY OUTPUT
 		output_label = "Output:"
-		Label(self.parent, text=output_label).grid(row=13, column=0, sticky=W, padx=5, pady=(5,15))
+		Label(self.parent, text=output_label).grid(row=14, column=0, sticky=W, padx=5, pady=(5,15))
 		self.output = Button(self.parent, text=">", command=lambda:self.play_out_sound('sprModel'), bg="gray30", fg="white")
-		self.output.grid(row=13, column=0, padx=(80,5), pady=(5,15), sticky=W)
+		self.output.grid(row=14, column=0, padx=(80,5), pady=(5,15), sticky=W)
 
 		# define options for opening file
 		self.file_opt = options = {}
@@ -177,11 +181,15 @@ class SprModel_frame:
 			freqDevOffset = int(self.freqDevOffset.get())
 			freqDevSlope = float(self.freqDevSlope.get())
 			
-			sprModel_function.main(inputFile, window, M, N, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
+			self.x, self.fs, self.mXr, self.tfreq, self.y = sprModel_function.main(inputFile, window, M, N, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
 
 		except ValueError as errorMessage:
 			tkMessageBox.showerror("Input values error", errorMessage)
 
+	def plot_model(self):
+		N = int(self.N.get())
+		sprModel_function.plot(self.x,self.fs,N,self.mXr,self.tfreq,self.y)
+		
 	def play_out_sound(self, extension):
 
 		filename = 'output_sounds/' + os.path.basename(self.filelocation.get())[:-4] + '_' + extension + '.wav'
