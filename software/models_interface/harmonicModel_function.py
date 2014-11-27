@@ -45,6 +45,11 @@ def main(inputFile='../../sounds/vignesh.wav', window='blackman', M=1201, N=2048
 
 	# write the sound resulting from harmonic analysis
 	UF.wavwrite(y, fs, outputFile)
+	return x,fs,hfreq,y
+
+def plot(x,fs,hfreq,y):
+	# hop size (has to be 1/4 of Ns)
+	H = 128
 
 	# create figure to show plots
 	plt.figure(figsize=(12, 9))
@@ -83,3 +88,5 @@ def main(inputFile='../../sounds/vignesh.wav', window='blackman', M=1201, N=2048
 
 if __name__ == "__main__":
 	main()
+elif __name__ == "__plot__":
+	plot(x,fs,hfreq,y)
