@@ -113,11 +113,15 @@ class SineModel_frame:
 		self.compute = Button(self.parent, text="Compute", command=self.compute_model, bg="dark red", fg="white")
 		self.compute.grid(row=10, column=0, padx=5, pady=(10,2), sticky=W)
 
+		#BUTTON TO PLOT
+		self.plot = Button(self.parent, text="Plot", command=self.plot_model, bg="gray30", fg="white")
+		self.plot.grid(row=11, column=0, padx=5, pady=(5,2), sticky=W)
+
 		#BUTTON TO PLAY OUTPUT
 		output_label = "Output:"
-		Label(self.parent, text=output_label).grid(row=11, column=0, sticky=W, padx=5, pady=(10,15))
+		Label(self.parent, text=output_label).grid(row=12, column=0, sticky=W, padx=5, pady=(10,15))
 		self.output = Button(self.parent, text=">", command=self.play_out_sound, bg="gray30", fg="white")
-		self.output.grid(row=11, column=0, padx=(60,5), pady=(10,15), sticky=W)
+		self.output.grid(row=12, column=0, padx=(60,5), pady=(10,15), sticky=W)
 
 		# define options for opening file
 		self.file_opt = options = {}
@@ -165,10 +169,13 @@ class SineModel_frame:
 			freqDevOffset = int(self.freqDevOffset.get())
 			freqDevSlope = float(self.freqDevSlope.get())
 			
-			sineModel_function.main(inputFile, window, M, N, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
+			self.x, self.fs, self.tfreq, self.y = sineModel_function.main(inputFile, window, M, N, t, minSineDur, maxnSines, freqDevOffset, freqDevSlope)
 
 		except ValueError as errorMessage:
 			tkMessageBox.showerror("Input values error", errorMessage)
+
+	def plot_model(self):
+		sineModel_function.plot(self.x, self.fs, self.tfreq, self.y)
 
 	def play_out_sound(self):
 
